@@ -16,11 +16,18 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
-#from launcher.views import main
+from django.contrib.auth.views import login, logout
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
+    url(r'^accounts/login/$',  login, 
+        {'template_name': 'registration/login.html'},
+        name='auth_login'),
+    url(r'^accounts/logout/$', logout,
+        {'next_page': '/accounts/login/'},
+        name='auth_logout' ),
+
     url(r'^$', RedirectView.as_view(url='/launcher/')),
-#    url(r'^launcher/', main),
     url(r'^launcher/', include('launcher.urls')),
 ]
