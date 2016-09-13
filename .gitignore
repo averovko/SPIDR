@@ -1,0 +1,11 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
+
+
+# virtualenv
+spidr-env/
+
+
+# DB files
+*.sqlite3
