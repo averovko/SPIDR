@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
+{% block title-text %}
+    SPIDR Launcher
+{% endblock title-text %}
+
+{% block head-include %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock head-include %}
+
 {% block main-body %}
     {% block content %}
         <div class="sidebar">
             <h2>Apps</h2>
-            <ul>
-                <li><a href="link1.html">app 1</a></li>
-                <li><a href="link2.html">app 2</a></li>
-                <li><a href="link3.html">app 3</a></li>
-                <li><a href="link4.html">app 4</a></li>
-            </ul>
+            <nav>
+                <ul>
+                    {% for application in applications %}
+                        <li><a href="{% url 'launcher_home' %}{{ application.name }}/">{{ application.label }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
         </div>
         <div class="content">
             main-body -> content <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />test

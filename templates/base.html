@@ -2,8 +2,10 @@
 
 <html>
     <head>
-        <title>{% block title %}SPIDR{% endblock title %}</title>
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>{% block title-text %}SPIDR{% endblock title-text %}</title>
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        {% block head-include %}{% endblock %}
     </head>
     <body>
         <div class="header">
