@@ -124,3 +124,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL='/'
+
+EXTERNAL_APPS_DIR = os.path.join(BASE_DIR, "apps")

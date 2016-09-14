@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigation>
+    <directory label="Menu">
+        <element label="Dashboard 1">dashboard_1</element>
+        <element label="Dashboard 2">dashboard_2</element>
+        <element label="Dashboard 3">dashboard_3</element>
+    </directory>
+    <directory label="Edit">
+        <element label="Dashboard 4">dashboard_4</element>
+        <element label="Dashboard 5">dashboard_5</element>
+        <element label="Dashboard 6">dashboard_6</element>
+    </directory>
+    <element label="Dashboard 7">dashboard_7</element>
+    <element label="Dashboard 8">dashboard_8</element>
+</navigation>
