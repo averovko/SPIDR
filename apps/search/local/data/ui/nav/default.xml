@@ -1,0 +1,30 @@
+<nav search_view="search" color="#65A637">
+  <?xml-stylesheet href="navstyle.css"?>
+  <collection label="Overview">
+  	<view name="hub_overview">Hub Overview</view>
+  	<view name="ss1">SS01</view>
+    <view name="ss2">SS02</view>
+    <view name="udi1">UDI1</view>
+  </collection>
+  <collection label="Camera Tunnels">
+    <view name="tunnel_cast">TunnelCast Live</view>
+    <view name="tunnel_cast_static">TunnelCast Static</view>
+  </collection>
+  <collection label="UDS">
+    <view name="tunnel_cast_udi">UDI TunnelCast Live</view>
+    <view name="tunnel_cast_static_udi">UDI TunnelCast Static</view>
+  </collection>
+  <collection label="Analytics">
+    <view name="barcode_clone">Barcode</view>
+    <view name="heartbeat_clone">Heartbeat</view>
+    <view name="histogram_clone">Histogram</view>
+    <view name="pph_clone">PPH</view>
+    <view name="images">Search</view>
+    <view name="sorter_clone">Sorter</view>
+    <view name="stats">Statistics</view>
+    <view name="trends_clone">Trends</view>
+    <view name="utilization">Utilization</view>
+  </collection>
+  <view name="flashtimeline" />
+  <view name="manual">Manual</view>
+</nav>

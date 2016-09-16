@@ -23,8 +23,8 @@ def main(request):
     for app in apps:
 
         app_home = os.path.join(apps_dir, app)
-        config_file = os.path.join(app_home, 'config', 'app.conf')
-
+        config_file = os.path.join(app_home, 'local', 'app.conf')
+        print(config_file)
         config.read(config_file)
         label = config.get('ui', 'label')
         application = Application(app, label, app_home)
@@ -37,7 +37,7 @@ def main(request):
 def launch_app(request, app_name):
     print(app_name)
 
-    config_file = os.path.join(getattr(settings, "EXTERNAL_APPS_DIR", None), app_name, 'config', 'app.conf')
+    config_file = os.path.join(getattr(settings, "EXTERNAL_APPS_DIR", None), app_name, 'local', 'app.conf')
 
     config = configparser.ConfigParser()
     config.read(config_file)
@@ -50,6 +50,6 @@ def launch_app(request, app_name):
 def launch_app_dashboard(request, app_name, dashboard_name):
     print('Application:{}, Dashboard:{}'.format(app_name, dashboard_name))
 
-    menu_html = XMLConverter.convert_navigation(xml_file=os.path.join(getattr(settings, "EXTERNAL_APPS_DIR", None), app_name, 'views', 'navigation', 'navigation.xml'))
+    menu_html = XMLConverter.convert_navigation(xml_file=os.path.join(getattr(settings, "EXTERNAL_APPS_DIR", None), app_name, 'local', 'data', 'ui', 'nav', 'default.xml'))
     return render(request, 'launcher/main.html', {'menu_html': menu_html})
 

@@ -1,0 +1,112 @@
+<form hideSplunkBar="true" hideFooter="true" hideEdit="false" script="dashboard.js,light_field_tools:iviewer_test.js,light_field_tools:customTimePicker.js,tunnel_test_rt.js,table_icons_inline.js,table_row_highlighting.js" stylesheet="tunnel_cast_nav.css,table_decorations.css,tunnel_test.css,light_field_tools:iviewer_all.css">
+  <label>TunnelCast Static</label>
+  <fieldset submitButton="false">
+    <input type="time" token="field1" searchWhenChanged="true">
+      <label></label>
+      <default>
+        <earliest>@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="sspc" searchWhenChanged="true">
+      <label></label>
+      <search>
+        <query>index=summary NOT tunn=*UDI* | dedup tunn | sort tunn</query>
+        <earliest>$field1.earliest$</earliest>
+        <latest>$field1.latest$</latest>
+      </search>
+      <fieldForLabel>tunn</fieldForLabel>
+      <fieldForValue>tunn</fieldForValue>
+      <default>SS01</default>
+    </input>
+    <input type="dropdown" token="sort" searchWhenChanged="true">
+      <label></label>
+      <choice value="*">All</choice>
+      <search>
+        <query>index=summary tunn=$sspc$ | dedup sortname | sort sortname</query>
+        <earliest>$field1.earliest$</earliest>
+        <latest>$field1.latest$</latest>
+      </search>
+      <fieldForLabel>sortname</fieldForLabel>
+      <fieldForValue>sortname</fieldForValue>
+      <default>*</default>
+    </input>
+    <input type="dropdown" token="condition" searchWhenChanged="true">
+      <label></label>
+      <search>
+        <query>index=summary tunn=$sspc$ sortname=$sort$ | mvexpand eventtype | dedup eventtype | search eventtype!="bc*" | sort eventtype</query>
+        <earliest>$field1.earliest$</earliest>
+        <latest>$field1.latest$</latest>
+      </search>
+      <fieldForLabel>eventtype</fieldForLabel>
+      <fieldForValue>eventtype</fieldForValue>
+      <choice value="*">All</choice>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Percentage Time Chart</title>
+      <chart>
+        <search>
+          <query>index=summary tunn=$sspc$ sortname="$sort$" | timechart count(eval(eventtype="NoRead")) AS NR count(eval(LFT_Status!=0)) AS ND count(eval(weight_status!=00)) AS NW count AS total | eval pct1=(NR/total)*100 | eval pct2=(ND/total)*100 | eval pct3=(NW/total)*100 | timechart values(pct1) AS NoRead values(pct2) AS NotValidDim values(pct3) AS NotValidWeight</query>
+          <earliest>$field1.earliest$</earliest>
+          <latest>$field1.latest$</latest>
+        </search>
+        <selection>
+          <set token="slider.start">$start$</set>
+          <set token="slider.end">$end$</set>
+        </selection>
+        <option name="charting.chart">line</option>
+        <option name="charting.axisY2.enabled">false</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">-45</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">default</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.axisTitleX.text">Date and Time</option>
+        <option name="charting.axisTitleY.text">Percentage</option>
+      </chart>
+      
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Data Table</title>
+      <table id="datagrid">
+        <search>
+          <query>index=summary tunn="$sspc$" eventtype="$condition$" sortname="$sort$" | table _time TOP LF RB RF LB BOT CLV1 CLV2 NoRead gap length width height LFT_Status weight weight_status angle tunnel object_id object_index TimeStamp RealVolume BoxFactor host_message RealVolume code1 sortname usertag1 usertag2 pkgCondition wtCondition barcode1 barcode2 barcode3 barcode4 barcode5 weight_offset | rename gap AS Gap length AS Length width AS Width height AS Height LFT_Status AS "LFT" weight AS Weight weight_status AS "WT Stat" host_message AS "Host Message" angle AS "Angle" barcode1 AS "Barcode" object_id AS "Package ID" | sort -_time</query>
+          <earliest>$slider.start$</earliest>
+          <latest>$slider.end$</latest>
+        </search>
+        <fields>_time, TOP, LF, RB, RF, LB, BOT, CLV1, CLV2, NoRead, Barcode, "Package ID", Gap, Length, Width, Height, LFT, Weight, "WT Stat"</fields>
+        <option name="wrap">true</option>
+        <option name="rowNumbers">false</option>
+        <option name="drilldown">cell</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="count">10</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+          <div id="belt">Loading belt...</div>
+        </html>
+    </panel>
+  </row>
+</form>
