@@ -115,6 +115,11 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+LOGIN_REDIRECT_URL='/'
+
+EXTERNAL_APPS_DIR = os.path.join(BASE_DIR, "apps")
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
@@ -123,6 +128,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-LOGIN_REDIRECT_URL='/'
-
-EXTERNAL_APPS_DIR = os.path.join(BASE_DIR, "apps")
+for app in os.listdir(EXTERNAL_APPS_DIR):
+    STATICFILES_DIRS.append(os.path.join(EXTERNAL_APPS_DIR, app, "appserver", "static"))

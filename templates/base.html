@@ -3,7 +3,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>{% block title-text %}SPIDR{% endblock title-text %}</title>
+        <title>
+            {% block title-text %}SPIDR{% endblock title-text %}
+        </title>
+
+        <link rel="icon" type="image/png" href="{% static 'icons/spider/spider_64x64.png' %}" />
+
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         {% block head-include %}{% endblock %}
     </head>

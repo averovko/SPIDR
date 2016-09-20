@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title-text %}
+            SPIDR {{ app_name }}
+{% endblock title-text %}
+
+{% block head-include %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" href="{% static stylesheet %}">
+    {% endfor %}
+{% endblock head-include %}
+
+{% block main-body %}
+    {% block content %}
+            <div class="topmenu">
+                {% autoescape off %}{{ menu_html }}{% endautoescape %}
+            </div>
+            <div class="content">
+
+            </div>
+                
+    {% endblock content %}
+{% endblock main-body %}

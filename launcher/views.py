@@ -48,8 +48,10 @@ def launch_app(request, app_name):
 
 @login_required
 def launch_app_dashboard(request, app_name, dashboard_name):
-    print('Application:{}, Dashboard:{}'.format(app_name, dashboard_name))
-
-    menu_html = XMLConverter.convert_navigation(xml_file=os.path.join(getattr(settings, "EXTERNAL_APPS_DIR", None), app_name, 'local', 'data', 'ui', 'nav', 'default.xml'))
-    return render(request, 'launcher/main.html', {'menu_html': menu_html})
+#    print('Application:{}, Dashboard:{}'.format(app_name, dashboard_name))
+    stylesheets = []
+    menu_html, menu_stylesheet = XMLConverter.convert_navigation(xml_file=os.path.join(getattr(settings, "EXTERNAL_APPS_DIR", None), app_name, 'local', 'data', 'ui', 'nav', 'default.xml'))
+    stylesheets.extend(menu_stylesheet)
+    
+    return render(request, 'launcher/app.html', {'app_name':app_name, 'stylesheets':stylesheets, 'menu_html':menu_html})
 
